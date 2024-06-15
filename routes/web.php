@@ -27,7 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/student', [StudentController::class, 'index']);
     Route::post('/simpanSiswa', [StudentController::class, 'simpan']);
     Route::put('/updateStudent', [StudentController::class, 'update']);
-    Route::get('/delete-student', [StudentController::class, 'hapus']);
+    Route::get('/delete-student/{id}', [StudentController::class, 'hapus']);
 
     // PERKELAS
     Route::get('/student/class/{tahun_masuk}/{id}', [StudentController::class, 'studentClass']);
@@ -36,6 +36,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/student/transaksi/{id}', [StudentController::class, 'transaksi']);
     Route::get('/student/cetak-nota/{student_id}/{id}', [StudentController::class, 'cetakNota']);
     Route::get('/student/cetak-laporan/{tahun_masuk}/{class_id}', [StudentController::class, 'cetakLaporan']);
+    Route::get('/student-eksport-excel', [StudentController::class, 'eksport_excel']);
+    Route::post('/student-import-excel', [StudentController::class, 'import_excel']);
 
 
     Route::get('/classroom', [ClassController::class, 'index']);

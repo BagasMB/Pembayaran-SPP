@@ -15,6 +15,7 @@ class ClassRoomSeeder extends Seeder
      */
     public function run(): void
     {
+        date_default_timezone_set('Asia/Jakarta');
         $data = [
             ['name_class' => 'Mesin A', 'jurusan' => 'Teknik Mesin'],
             ['name_class' => 'Mesin B', 'jurusan' => 'Teknik Mesin'],

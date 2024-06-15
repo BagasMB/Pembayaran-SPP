@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        date_default_timezone_set('Asia/Jakarta');
         $data = [
             ['username' => 'admin', 'password' => Hash::make('ya'), 'name' => 'Bagas', 'role' => 'Admin', 'email' => 'bgs@gmail.com', 'email_verified_at' => now(), 'remember_token' => Str::random(10)],
             ['username' => 'user', 'password' => Hash::make('ya'), 'name' => 'Chiss', 'role' => 'Staff', 'email' => 'budi@gmail.com', 'email_verified_at' => now(), 'remember_token' => Str::random(10)],

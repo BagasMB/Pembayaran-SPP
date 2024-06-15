@@ -14,6 +14,7 @@ class ConfigurationSeeder extends Seeder
      */
     public function run(): void
     {
+        date_default_timezone_set('Asia/Jakarta');
         $data = [
             'name' => 'SPPKU',
             'email' => 'smkbisa@gmail.com',

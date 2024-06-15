@@ -65,7 +65,7 @@
             <div class="card card-responsive">
                 <div class="card-header">
                     <div class="d-flex align-items-center justify-content-between">
-                        <h5 class="mb-2">Data Transaksi Siswa</h5>
+                        <h5 class="mb-2">Data Transaksi Siswa Terbaru</h5>
                         {{-- <span class="badge bg-label-primary float-end" type="button" data-bs-toggle="modal"
                             data-bs-target="#cetaklaporan">
                             <i class="fa-solid fa-file-export me-1"></i>

@@ -1,25 +1,31 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
+
+    <div class="mb-3">
+        <a href="{{ asset('assets/import-excel/format-class.xlsx') }}" download class="btn btn-warning btn-sm mb-2 me-2"
+            type="button">
+            <i class="fa-solid fa-download me-1"></i>
+            Download Format Import
+        </a>
+        <a href="/class-eksport-excel" class="btn btn-danger btn-sm mb-2 me-2" type="button">
+            <i class="fa-solid fa-download me-1"></i>
+            Export Excel
+        </a>
+        <button class="btn btn-success btn-sm mb-2 me-2" type="button" data-bs-toggle="modal"
+            data-bs-target="#import-excel">
+            <i class="fa-solid fa-upload me-1"></i>
+            Import Excel
+        </button>
+    </div>
     <div class="card card-responsive mb-3">
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between">
                 <h5 class="mb-0">Data Class</h5>
-                <div class="d-flex align-items-center justify-content-end">
-                    <a href="/class-eksport-excel" class="btn btn-danger btn-sm me-2" type="button">
-                        <i class="fa-solid fa-download me-1"></i>
-                        Export Excel
-                    </a>
-                    <button class="btn btn-success btn-sm me-2" type="button" data-bs-toggle="modal"
-                        data-bs-target="#import-excel">
-                        <i class="fa-solid fa-upload me-1"></i>
-                        Import Excel
-                    </button>
-                    <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal"
-                        data-bs-target="#modalTambaClass">
-                        <i class="fa-solid fa-person-circle-plus me-1"></i>
-                        Tambah
-                    </button>
-                </div>
+                <button class="btn btn-primary btn-sm mb-2" type="button" data-bs-toggle="modal"
+                    data-bs-target="#modalTambaClass">
+                    <i class="fa-solid fa-person-circle-plus me-1"></i>
+                    Tambah
+                </button>
             </div>
         </div>
         <div class="card-body">

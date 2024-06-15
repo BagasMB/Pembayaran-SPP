@@ -39,7 +39,8 @@ class ClassController extends Controller
     public function eksport_excel(Request $request)
     {
         // dd($request->all());
-        return Excel::download(new ClassExport, 'Class.xlsx');
+        date_default_timezone_set('Asia/Jakarta');
+        return Excel::download(new ClassExport, 'class-' . date('ymdHis') . '.xlsx');
     }
 
     public function import_excel(Request $request)

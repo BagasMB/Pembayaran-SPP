@@ -14,6 +14,7 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
+        date_default_timezone_set('Asia/Jakarta');
         $data = [
             ['name' => 'Bagas Dwi Prasetyo', 'nis' => '8178', 'gender' => 'Laki-Laki', 'tanggal_lahir' => '2004-08-10', 'alamat' => 'sas', 'class_id' => 11, 'tahun_masuk' => 2021],
             ['name' => 'Ardy Nur Saputra', 'nis' => '8603', 'gender' => 'Laki-Laki', 'tanggal_lahir' => '2007-01-5', 'alamat' => 'kelaa', 'class_id' => 8, 'tahun_masuk' => 2022],

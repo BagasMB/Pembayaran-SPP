@@ -6,32 +6,7 @@
         $spp1 = $spp->spp1 - $student->spp1;
         $spp2 = $spp->spp2 - $student->spp2;
         $spp3 = $spp->spp3 - $student->spp3;
-
-        $tahunSekarang = date('Y');
-        $bulanSekarang = date('m');
-
-        // Tentukan bulan awal tahun ajaran baru
-        $bulanMulaiTahunAjaran = 7; // Misalnya bulan Juli
-
-        // Hitung selisih tahun
-        $selisihTahun = $tahunSekarang - $student->tahun_masuk;
-
-        // Sesuaikan perhitungan jika bulan sekarang kurang dari bulan awal tahun ajaran
-        if ($bulanSekarang < $bulanMulaiTahunAjaran) {
-            $selisihTahun--;
-        }
-
-        // Tambahkan 1 untuk menghitung kelas, karena siswa baru dimulai dari kelas 1
-        $kelas = $selisihTahun + 1;
-        if ($kelas == 1) {
-            $kelas = 'X ' . $student->class->name_class;
-        } elseif ($kelas == 2) {
-            $kelas = 'XI ' . $student->class->name_class;
-        } elseif ($kelas == 3) {
-            $kelas = 'XII ' . $student->class->name_class;
-        } else {
-            $kelas = 'Alumni ' . $student->tahun_masuk;
-        }
+        $kelas = new \App\Models\ClassRoom();
     @endphp
 
     <div class="card card-responsive mb-3">
@@ -62,7 +37,7 @@
                         <tr>
                             <td>Kelas </td>
                             <td>:</td>
-                            <td>{{ $kelas }} </td>
+                            <td>{{ $kelas->now_class($student->tahun_masuk, $student->class->name_class) }} </td>
                         </tr>
                         <tr>
                             <td>Jurusan </td>

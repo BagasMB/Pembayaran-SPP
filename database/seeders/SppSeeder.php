@@ -14,6 +14,7 @@ class SppSeeder extends Seeder
      */
     public function run(): void
     {
+        date_default_timezone_set('Asia/Jakarta');
         $data = [
             ['spp1' => 1200000, 'spp2' => 1300000, 'spp3' => 1800000, 'tahun_ajaran' => '2024/2025'],
             ['spp1' => 1000000, 'spp2' => 1200000, 'spp3' => 1500000, 'tahun_ajaran' => '2023/2024'],

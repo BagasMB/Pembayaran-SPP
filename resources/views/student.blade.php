@@ -1,14 +1,32 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
+    {{-- <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Basic Tables</h4> --}}
+    <div class="mb-3">
+        <a href="{{ asset('assets/import-excel/format-student.xlsx') }}" download class="btn btn-warning btn-sm mb-2 me-2"
+            type="button">
+            <i class="fa-solid fa-download me-1"></i>
+            Download Format Import
+        </a>
+        <a href="/student-eksport-excel" class="btn btn-danger btn-sm mb-2 me-2" type="button">
+            <i class="fa-solid fa-download me-1"></i>
+            Export Excel
+        </a>
+        <button class="btn btn-success btn-sm mb-2 me-2" type="button" data-bs-toggle="modal"
+            data-bs-target="#import-excel">
+            <i class="fa-solid fa-upload me-1"></i>
+            Import Excel
+        </button>
+    </div>
+
     <div class="card card-responsive mb-3">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5 class="mb-0">Data Students</h5>
-            <span class="badge bg-label-primary float-end" type="button" data-bs-toggle="modal"
+            <button class="btn btn-primary btn-sm mb-2" type="button" data-bs-toggle="modal"
                 data-bs-target="#modalTambastudent">
                 <i class="fa-solid fa-person-circle-plus me-1"></i>
                 Tambah
-            </span>
+            </button>
         </div>
         <div class="card-body">
             <div class="table-responsive text-nowrap">
@@ -27,38 +45,14 @@
                     <tbody>
                         @foreach ($studentList as $list)
                             @php
-                                $tahunSekarang = date('Y');
-                                $bulanSekarang = date('m');
-
-                                // Tentukan bulan awal tahun ajaran baru
-                                $bulanMulaiTahunAjaran = 7; // Misalnya bulan Juli
-
-                                // Hitung selisih tahun
-                                $selisihTahun = $tahunSekarang - $list->tahun_masuk;
-
-                                // Sesuaikan perhitungan jika bulan sekarang kurang dari bulan awal tahun ajaran
-                                if ($bulanSekarang < $bulanMulaiTahunAjaran) {
-                                    $selisihTahun--;
-                                }
-
-                                // Tambahkan 1 untuk menghitung kelas, karena siswa baru dimulai dari kelas 1
-                                $kelas = $selisihTahun + 1;
-                                if ($kelas == 1) {
-                                    $kelas = 'X ' . $list->class['name_class'];
-                                } elseif ($kelas == 2) {
-                                    $kelas = 'XI ' . $list->class['name_class'];
-                                } elseif ($kelas == 3) {
-                                    $kelas = 'XII ' . $list->class['name_class'];
-                                } else {
-                                    $kelas = 'Alumni ' . $list->tahun_masuk;
-                                }
+                                $kelas = new \App\Models\ClassRoom();
                             @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $list->nis }}</td>
                                 <td>{{ $list->name }}</td>
                                 <td>{{ $list->gender }}</td>
-                                <td>{{ $kelas }}</td>
+                                <td>{{ $kelas->now_class($list->tahun_masuk, $list->class->name_class) }} </td>
                                 <td>{{ $list->tahun_masuk }}</td>
                                 <td>
                                     <a href="/student/transaksi/{{ $list->id }}" type="button"
@@ -106,7 +100,8 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col mb-3">
-                                                        <label for="gender" class="form-label">Jenis Kelamin</label>
+                                                        <label for="gender" class="form-label">Jenis
+                                                            Kelamin</label>
                                                         <select class="form-select" id="gender" name="gender"
                                                             aria-label="Default select example">
                                                             <option value="Laki-Laki"
@@ -132,14 +127,15 @@
                                                 <div class="row mb-3">
                                                     <div class="col">
                                                         <label class="form-label">Tanggal Lahir</label>
-                                                        <input type="date" name="tanggal_lahir" class="form-control"
-                                                            value="{{ $list->tanggal_lahir }}" autocomplete="off">
+                                                        <input type="date" name="tanggal_lahir"
+                                                            class="form-control" value="{{ $list->tanggal_lahir }}"
+                                                            autocomplete="off">
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label">Tahun Masuk</label>
                                                         <input type="text" name="tahun_masuk" class="form-control"
-                                                            placeholder="Tahun Masuk" value="{{ $list->tahun_masuk }}"
-                                                            autocomplete="off">
+                                                            placeholder="Tahun Masuk"
+                                                            value="{{ $list->tahun_masuk }}" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div>
@@ -235,5 +231,31 @@
         </div>
     </div>
 
+    <div class="modal fade" id="import-excel" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel3">Import Excel</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="student-import-excel" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Pilih FIle</label>
+                            <input type="file" name="excel" class="form-control"
+                                accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                placeholder="Enter Nama" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary"
+                            data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="save" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </x-layout>

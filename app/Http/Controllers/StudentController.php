@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClassRoom;
-use App\Models\Configuration;
+use App\Exports\StudentExport;
+use App\Imports\StudentImport;
+use Carbon\Carbon;
 use App\Models\Spp;
 use App\Models\Student;
+use App\Models\ClassRoom;
 use App\Models\Transaction;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Configuration;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -263,5 +266,20 @@ class StudentController extends Controller
         Student::findorfail($id)->delete();
         flash()->success('Data Berhasil Di Hapus 🎉');
         return redirect('/student');
+    }
+
+    public function eksport_excel(Request $request)
+    {
+        // dd($request->all());
+        date_default_timezone_set('Asia/Jakarta');
+        return (new StudentExport)->download('student-' . date('ymdHis') . '.xlsx');
+        // return Excel::download(new StudentExport, 'student-' . date('ymdHis') . '.xlsx');
+    }
+
+    public function import_excel(Request $request)
+    {
+        Excel::import(new StudentImport, $request->file('excel'));
+        flash()->success('Data Berhasil Di Simpan 🎉');
+        return back();
     }
 }

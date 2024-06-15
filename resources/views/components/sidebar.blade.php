@@ -131,7 +131,7 @@
           @endif
 
 
-          <li class="menu-header small text-uppercase">
+          {{-- <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Audio Boss</span>
           </li>
 
@@ -141,7 +141,7 @@
                   <i class="menu-icon tf-icons fa-solid fa-headphones-simple"></i>
                   <div data-i18n="audio">Audio</div>
               </a>
-          </li>
+          </li> --}}
 
       </ul>
   </aside>
