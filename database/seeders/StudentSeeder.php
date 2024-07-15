@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Student;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Student;
 use Illuminate\Database\Seeder;
 
 class StudentSeeder extends Seeder
@@ -16,12 +15,12 @@ class StudentSeeder extends Seeder
     {
         date_default_timezone_set('Asia/Jakarta');
         $data = [
-            ['name' => 'Bagas Dwi Prasetyo', 'nis' => '8178', 'gender' => 'Laki-Laki', 'tanggal_lahir' => '2004-08-10', 'alamat' => 'sas', 'class_id' => 11, 'tahun_masuk' => 2021],
-            ['name' => 'Ardy Nur Saputra', 'nis' => '8603', 'gender' => 'Laki-Laki', 'tanggal_lahir' => '2007-01-5', 'alamat' => 'kelaa', 'class_id' => 8, 'tahun_masuk' => 2022],
-            ['name' => 'Bagas Mahardika Budiharto', 'nis' => '8604', 'gender' => 'Laki-Laki', 'tanggal_lahir' => '2007-08-10', 'alamat' => 'Jungke', 'class_id' => 8, 'tahun_masuk' => 2022],
-            ['name' => 'Deco Saputro', 'nis' => '8606', 'gender' => 'Laki-Laki', 'tanggal_lahir' => '2006-09-22', 'alamat' => 'tegal', 'class_id' => 8, 'tahun_masuk' => 2022],
-            ['name' => 'Filip Dwi Utomo', 'nis' => '8614', 'gender' => 'Laki-Laki', 'tanggal_lahir' => '2007-05-20', 'alamat' => 'ploso', 'class_id' => 8, 'tahun_masuk' => 2022],
-            ['name' => 'Muh Agung Permadi', 'nis' => '9088', 'gender' => 'Laki-Laki', 'tanggal_lahir' => '2007-07-22', 'alamat' => 'jungke', 'class_id' => 9, 'tahun_masuk' => 2023],
+            ['name' => 'Bagas Dwi Prasetyo', 'nis' => '8178', 'gender' => 'Laki-Laki', 'telp' => 81235343, 'tanggal_lahir' => '2004-08-10', 'alamat' => 'sas', 'class_id' => 11, 'tahun_masuk' => 2021],
+            ['name' => 'Ardy Nur Saputra', 'nis' => '8603', 'gender' => 'Laki-Laki', 'telp' => 81235343, 'tanggal_lahir' => '2007-01-5', 'alamat' => 'kelaa', 'class_id' => 8, 'tahun_masuk' => 2022],
+            ['name' => 'Bagas Mahardika Budiharto', 'nis' => '8604', 'gender' => 'Laki-Laki', 'telp' => 81235343, 'tanggal_lahir' => '2007-08-10', 'alamat' => 'Jungke', 'class_id' => 8, 'tahun_masuk' => 2022],
+            ['name' => 'Deco Saputro', 'nis' => '8606', 'gender' => 'Laki-Laki', 'telp' => 81235343, 'tanggal_lahir' => '2006-09-22', 'alamat' => 'tegal', 'class_id' => 8, 'tahun_masuk' => 2022],
+            ['name' => 'Filip Dwi Utomo', 'nis' => '8614', 'gender' => 'Laki-Laki', 'telp' => 81235343, 'tanggal_lahir' => '2007-05-20', 'alamat' => 'ploso', 'class_id' => 8, 'tahun_masuk' => 2022],
+            ['name' => 'Muh Agung Permadi', 'nis' => '9088', 'gender' => 'Laki-Laki', 'telp' => 81235343, 'tanggal_lahir' => '2007-07-22', 'alamat' => 'jungke', 'class_id' => 9, 'tahun_masuk' => 2023],
         ];
 
         foreach ($data as $value) {
@@ -29,6 +28,7 @@ class StudentSeeder extends Seeder
                 'name' => $value['name'],
                 'nis' => $value['nis'],
                 'gender' => $value['gender'],
+                'telp' => $value['telp'],
                 'tanggal_lahir' => $value['tanggal_lahir'],
                 'class_id' => $value['class_id'],
                 'tahun_masuk' => $value['tahun_masuk'],

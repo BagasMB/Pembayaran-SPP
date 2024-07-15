@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ClassRoom extends Model
@@ -43,6 +42,36 @@ class ClassRoom extends Model
             $kelas = 'XII ' . $name_class;
         } else {
             $kelas = 'Alumni ' . $tahun_masuk;
+        }
+        return $kelas;
+    }
+
+    public static function class_number($tahun_masuk)
+    {
+        $tahunSekarang = date('Y');
+        $bulanSekarang = date('m');
+
+        // Tentukan bulan awal tahun ajaran baru
+        $bulanMulaiTahunAjaran = 7; // Misalnya bulan Juli
+
+        // Hitung selisih tahun
+        $selisihTahun = $tahunSekarang - $tahun_masuk;
+
+        // Sesuaikan perhitungan jika bulan sekarang kurang dari bulan awal tahun ajaran
+        if ($bulanSekarang < $bulanMulaiTahunAjaran) {
+            $selisihTahun--;
+        }
+
+        // Tambahkan 1 untuk menghitung kelas, karena siswa baru dimulai dari kelas 1
+        $kelas = $selisihTahun + 1;
+        if ($kelas == 0) {
+            $kelas = 1;
+        } elseif ($kelas == 1) {
+            $kelas = 2;
+        } elseif ($kelas == 2) {
+            $kelas = 3;
+        } else {
+            $kelas = 4;
         }
         return $kelas;
     }

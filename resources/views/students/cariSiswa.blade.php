@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Login | SPP</title>
+    <title>{{ $title }}</title>
 
     <meta name="description" content="" />
 
@@ -46,63 +46,53 @@
 
 <body>
     <!-- Content -->
-
     <div class="container-xxl">
-        <div class="authentication-wrapper authentication-basic container-p-y">
-            <div class="authentication-inner">
-                <!-- Register -->
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="mb-2">Welcome to Login Siswa! 👋</h4>
-                        <p class="mb-4">Masukan Nis And Password</p>
-
-                        @if (Session::has('status'))
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert"><i
-                                    class="fa fa-circle-exclamation me-2"></i>
-                                {{ Session::get('status') }}
-                            </div>
-                        @endif
-
-                        <form id="formAuthentication" class="mb-3" action="login_student" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="nis" class="form-label">Nis</label>
-                                <input type="text" class="form-control" id="nis" name="nis"
-                                    value="{{ old('nis') }}" placeholder="Enter your nis" autocomplete="off"
-                                    autofocus />
-                                @error('nis')
-                                    <p class="text-danger pl-3">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="mb-3 form-password-toggle">
-                                <label class="form-label" for="password">Password</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
-                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                </div>
-                                @error('password')
-                                    <p class="text-danger pl-3">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
-                            </div>
-                        </form>
-
-                        <p class="text-center">
-                            <span>Login Sebagai Admin?</span>
-                            <a href="/auth">
-                                <span>Login</span>
-                            </a>
-                        </p>
-                    </div>
+        <div class="card m-5">
+            <h5 class="card-header">Hasil Pencarian Dengan nama siswa : "{{ $nama }}"</h5>
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table id="myTable" class="table table-striped mb-3">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nis</th>
+                                <th>Nama Nama</th>
+                                <th>Kelas</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($students as $list)
+                                @php
+                                    $kelas = new \App\Models\ClassRoom();
+                                @endphp
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $list->nis }}</td>
+                                    <td>{{ $list->name }}</td>
+                                    <td>{{ $kelas->now_class($list->tahun_masuk, $list->class->name_class) }} </td>
+                                    <td>
+                                      <a href="transaksi-siswa/{{ $list->id }}" class="btn btn-primary btn-sm">
+                                        <i class="bx bx-wallet"></i>
+                                      </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        <span class="badge bg-danger">Nama Siswa "{{ $nama }}" Tidak Ada</span>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                    <a class="btn btn-primary" href="/auth">Klik disini untuk
+                        kembali. . .</a>
                 </div>
-                <!-- /Register -->
             </div>
         </div>
     </div>
+
 
     <!-- / Content -->
 

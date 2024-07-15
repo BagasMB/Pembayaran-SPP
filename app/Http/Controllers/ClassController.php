@@ -13,9 +13,7 @@ class ClassController extends Controller
 {
     public function index()
     {
-        // $class = DB::table('class_rooms')->join('teachers', 'class_rooms.teacher_id', '=', 'teachers.id')->get(['name_class', 'name_teacher', 'class_rooms.id', 'teacher_id']);
         $class = ClassRoom::orderBy('name_class', 'ASC')->get();
-        // dd(ClassRoom::with('walikelas'));
         return view('classroom', ['title' => 'ClassRoom', 'classList' => $class]);
     }
 

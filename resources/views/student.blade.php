@@ -84,22 +84,22 @@
                                             @method('PUT')
                                             <div class="modal-body">
                                                 <input type="hidden" name="id" value="{{ $list->id }}">
-                                                <div class="row">
-                                                    <div class="col mb-3">
+                                                <div class="row mb-3">
+                                                    <div class="col">
                                                         <label class="form-label">Nis</label>
                                                         <input type="text" name="nis" class="form-control"
                                                             placeholder="Enter Nis" value="{{ $list->nis }}"
                                                             autocomplete="off">
                                                     </div>
-                                                    <div class="col mb-3">
+                                                    <div class="col">
                                                         <label class="form-label">Nama</label>
                                                         <input type="text" name="name" class="form-control"
                                                             placeholder="Enter Nama" value="{{ $list->name }}"
                                                             autocomplete="off">
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col mb-3">
+                                                <div class="row mb-3">
+                                                    <div class="col">
                                                         <label for="gender" class="form-label">Jenis
                                                             Kelamin</label>
                                                         <select class="form-select" id="gender" name="gender"
@@ -112,7 +112,7 @@
                                                                 Perempuan</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col mb-3">
+                                                    <div class="col">
                                                         <label for="class_id" class="form-label">Class</label>
                                                         <select class="form-select" id="class_id" name="class_id"
                                                             aria-label="Default select example">
@@ -136,6 +136,17 @@
                                                         <input type="text" name="tahun_masuk" class="form-control"
                                                             placeholder="Tahun Masuk"
                                                             value="{{ $list->tahun_masuk }}" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label" for="telp">No Telepon</label>
+                                                    <div class="input-group input-group-merge">
+                                                        <span class="input-group-text">
+                                                            IND (+62)
+                                                        </span>
+                                                        <input type="text" class="form-control" name="telp"
+                                                            placeholder="81234567890" value="{{ $list->telp }}" aria-label="81234567890"
+                                                            id="telp" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div>
@@ -175,19 +186,19 @@
                     @csrf
                     <div class="modal-body">
                         <div class="row mb-3">
-                            <div class="col">
+                            <div class="col-6">
                                 <label class="form-label">Nis</label>
                                 <input type="text" name="nis" class="form-control" placeholder="Enter Nis"
                                     autocomplete="off">
                             </div>
-                            <div class="col">
+                            <div class="col-6">
                                 <label class="form-label">Nama</label>
                                 <input type="text" name="name" class="form-control" placeholder="Nama Lengkap"
                                     autocomplete="off">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col">
+                            <div class="col-6">
                                 <label for="gender" class="form-label">Jenis Kelamin</label>
                                 <select class="form-select" id="gender" name="gender"
                                     aria-label="Default select example">
@@ -195,7 +206,7 @@
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
                             </div>
-                            <div class="col">
+                            <div class="col-6">
                                 <label for="class_id" class="form-label">Class</label>
                                 <select class="form-select" id="class_id" name="class_id"
                                     aria-label="Default select example">
@@ -206,14 +217,39 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col">
+                            <div class="col-6">
                                 <label class="form-label">Tanggal Lahir</label>
                                 <input type="date" name="tanggal_lahir" class="form-control" autocomplete="off">
                             </div>
-                            <div class="col">
+                            <div class="col-6">
                                 <label class="form-label">Tahun Masuk</label>
                                 <input type="text" name="tahun_masuk" class="form-control"
                                     placeholder="Tahun Masuk" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label" for="telp">No Telepon</label>
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-text">
+                                        IND (+62)
+                                    </span>
+                                    <input type="text" class="form-control" name="telp"
+                                        placeholder="81234567890" aria-label="81234567890" id="telp"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-6 form-password-toggle">
+                                <label class="form-label" for="password32">Password <span
+                                        class="text-danger">(Default 1234)</span></label>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" class="form-control" name="password" id="password32"
+                                        placeholder="············" aria-describedby="password" value="1234"
+                                        autocomplete="off">
+                                    <span class="input-group-text cursor-pointer" id="password">
+                                        <i class="bx bx-hide"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div>

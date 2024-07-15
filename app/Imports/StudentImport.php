@@ -48,6 +48,7 @@ class StudentImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
                 'tahun_masuk' => $row['tahun_masuk'],
                 'tanggal_lahir' => $tanggal_lahir,
                 'alamat' => $row['alamat'],
+                'telp' => $row['telp'],
             ]);
         }
     }

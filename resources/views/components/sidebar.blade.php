@@ -94,7 +94,6 @@
           @endforeach
 
 
-          <!-- Layouts -->
           <li class="menu-item {{ request()->is('spp') ? 'active' : '' }}">
               <a href="/spp" class="menu-link">
                   <i class="menu-icon tf-icons fa-solid fa-person-chalkboard"></i>

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\StudentExport;
-use App\Imports\StudentImport;
 use Carbon\Carbon;
 use App\Models\Spp;
 use App\Models\Student;
@@ -11,6 +9,8 @@ use App\Models\ClassRoom;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\Configuration;
+use App\Exports\StudentExport;
+use App\Imports\StudentImport;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -28,7 +28,6 @@ class StudentController extends Controller
     public function index()
     {
         $studentList = Student::with('class')->orderBy('nis', 'ASC')->get();
-        // $studentList = DB::table('students')->join('class_rooms', 'class_rooms.id', '=', 'students.class_id')->orderBy('nis', 'ASC')->get(['students.id', 'name', 'nis', 'name_class', 'class_id', 'gender', 'tahun_masuk']);
         $class = ClassRoom::select('id', 'name_class')->orderBy('name_class', 'ASC')->get();
         return view('student', ['title' => 'Page | Student', 'studentList' => $studentList, 'class' => $class]);
     }
@@ -93,39 +92,58 @@ class StudentController extends Controller
     {
         $nota = Transaction::getNota();
         $kelas = $request->kelas;
+        $nominal1 = $request->input('spp1_sisa') - $request->input('spp1');
+        $nominal2 = $request->input('spp2_sisa') - $request->input('spp2');
+        $nominal3 = $request->input('spp3_sisa') - $request->input('spp3');
+
         if ($kelas == 1) {
-            $data = [
-                'nota' => $nota,
-                'spp1' => $request->input('spp1'),
-                'tahun_ajaran' => $request->input('tahun_ajaran'),
-                'student_id' => $request->input('student_id'),
-                'tanggal_bayar' => $request->input('tanggal_bayar'),
-            ];
-            $studentbayar = [
-                'spp1' => $request->input('spp1') + $request->input('spp1_lama'),
-            ];
+            if ($nominal1 < 0) {
+                flash()->warning('Nominal Terlalu banyak 🎉');
+                return redirect('/student/pembayaran/' . $request->input('student_id') . '/' . $request->input('kelas') . '/' . $request->input('tahun_ajaran'));
+            } else {
+                $data = [
+                    'nota' => $nota,
+                    'spp1' => $request->input('spp1'),
+                    'tahun_ajaran' => $request->input('tahun_ajaran'),
+                    'student_id' => $request->input('student_id'),
+                    'tanggal_bayar' => $request->input('tanggal_bayar'),
+                ];
+                $studentbayar = [
+                    'spp1' => $request->input('spp1') + $request->input('spp1_lama'),
+                ];
+            }
         } elseif ($kelas == 2) {
-            $data = [
-                'nota' => $nota,
-                'spp2' => $request->input('spp2'),
-                'tahun_ajaran' => $request->input('tahun_ajaran'),
-                'student_id' => $request->input('student_id'),
-                'tanggal_bayar' => $request->input('tanggal_bayar'),
-            ];
-            $studentbayar = [
-                'spp2' => $request->input('spp2') + $request->input('spp2_lama'),
-            ];
+            if ($nominal2 < 0) {
+                flash()->warning('Nominal Terlalu banyak 🎉');
+                return redirect('/student/pembayaran/' . $request->input('student_id') . '/' . $request->input('kelas') . '/' . $request->input('tahun_ajaran'));
+            } else {
+                $data = [
+                    'nota' => $nota,
+                    'spp2' => $request->input('spp2'),
+                    'tahun_ajaran' => $request->input('tahun_ajaran'),
+                    'student_id' => $request->input('student_id'),
+                    'tanggal_bayar' => $request->input('tanggal_bayar'),
+                ];
+                $studentbayar = [
+                    'spp2' => $request->input('spp2') + $request->input('spp2_lama'),
+                ];
+            }
         } elseif ($kelas == 3) {
-            $data = [
-                'nota' => $nota,
-                'spp3' => $request->input('spp3'),
-                'tahun_ajaran' => $request->input('tahun_ajaran'),
-                'student_id' => $request->input('student_id'),
-                'tanggal_bayar' => $request->input('tanggal_bayar'),
-            ];
-            $studentbayar = [
-                'spp3' => $request->input('spp3') + $request->input('spp3_lama'),
-            ];
+            if ($nominal3 < 0) {
+                flash()->warning('Nominal Terlalu banyak 🎉');
+                return redirect('/student/pembayaran/' . $request->input('student_id') . '/' . $request->input('kelas') . '/' . $request->input('tahun_ajaran'));
+            } else {
+                $data = [
+                    'nota' => $nota,
+                    'spp3' => $request->input('spp3'),
+                    'tahun_ajaran' => $request->input('tahun_ajaran'),
+                    'student_id' => $request->input('student_id'),
+                    'tanggal_bayar' => $request->input('tanggal_bayar'),
+                ];
+                $studentbayar = [
+                    'spp3' => $request->input('spp3') + $request->input('spp3_lama'),
+                ];
+            }
         }
         DB::transaction(function () use ($request, $studentbayar, $data) {
             // Update data siswa
@@ -220,11 +238,13 @@ class StudentController extends Controller
             [
                 'nis' => 'required|unique:students|max:4|min:4',
                 'tahun_masuk' => 'required|integer|min:2019|max:' . Carbon::now()->year,
+                'telp' => 'required|integer',
             ],
             [
                 'nis.required' => 'Nis wajib Diisi',
                 'name.required' => 'Name wajib Diisi',
                 'tahun_masuk.required' => 'Tahun Masuk Wajib DIisi',
+                'telp.required' => 'No Telepon Wajib Diisi',
                 'nis.max' => 'Nis Harus :max Karakter',
                 'nis.min' => 'Nis Harus :min Karakter',
                 'tahun_masuk.min' => 'Tahun Masuk Minimal Tahun :min',
@@ -244,11 +264,13 @@ class StudentController extends Controller
             [
                 'nis' => 'required|max:4|min:4',
                 'tahun_masuk' => 'required|integer|min:2019|max:' . Carbon::now()->year,
+                'telp' => 'required|integer',
             ],
             [
                 'nis.required' => 'Nis wajib Diisi',
                 'name.required' => 'Name wajib Diisi',
                 'tahun_masuk.required' => 'Tahun Masuk Wajib DIisi',
+                'telp.required' => 'No Telepon Wajib DIisi',
                 'nis.max' => 'Nis Harus :max Karakter',
                 'nis.min' => 'Nis Harus :min Karakter',
                 'tahun_masuk.min' => 'Tahun Masuk Minimal Tahun :min',
@@ -281,5 +303,25 @@ class StudentController extends Controller
         Excel::import(new StudentImport, $request->file('excel'));
         flash()->success('Data Berhasil Di Simpan 🎉');
         return back();
+    }
+
+    public function cariSiswa(Request $request)
+    {
+        $data = [
+            'title' => 'Cari Siswa Bernama ' . $request->nama_siswa,
+            'nama' => $request->nama_siswa,
+            'students' => Student::with('class')->where('name', 'LIKE', "%{$request->nama_siswa}%")->get()
+        ];
+        return view('students.cariSiswa', $data);
+    }
+
+    public function transaksiSiswa($id)
+    {
+        $data = [
+            'title' => 'Data Transaksi Siswa',
+            'student' => Student::with('class')->find($id),
+            'transaksi' => Transaction::with('student')->where('student_id', $id)->get(),
+        ];
+        return view('students.siswa', $data);
     }
 }

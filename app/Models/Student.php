@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'nis', 'gender', 'class_id', 'tahun_masuk', 'tanggal_lahir', 'alamat', 'spp1', 'spp2', 'spp3'];
-
+    protected $fillable = ['name', 'nis', 'gender', 'telp', 'class_id', 'tahun_masuk', 'tanggal_lahir', 'alamat', 'spp1', 'spp2', 'spp3'];
+    
     public function class(): BelongsTo
     {
         return $this->belongsTo(ClassRoom::class);

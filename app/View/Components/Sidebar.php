@@ -24,11 +24,6 @@ class Sidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        // $angkatan = Student::distinct()
-        //     ->select('tahun_masuk', 'id')
-        //     ->orderBy('tahun_masuk', 'DESC')
-        //     ->get();
-
         $angkatan = Student::select('tahun_masuk')
             ->distinct()
             ->orderBy('tahun_masuk', 'DESC')

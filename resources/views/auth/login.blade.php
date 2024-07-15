@@ -53,7 +53,7 @@
                 <!-- Register -->
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-2">Welcome to Login! 👋</h4>
+                        <h4 class="mb-2">Welcome to Login! 🧑‍🎓</h4>
                         <p class="mb-4">Masukan Username And Password</p>
 
                         @if (Session::has('status'))
@@ -87,19 +87,45 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                                <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
                             </div>
                         </form>
 
-                        {{-- <p class="text-center">
-                            <span>Login Sebagai Siswa?</span>
-                            <a href="/auth-student">
-                                <span>Login</span>
-                            </a>
-                        </p> --}}
+                        <div class="mb-3">
+                            <button class="btn btn-primary d-grid w-100" type="button" data-bs-toggle="modal"
+                                data-bs-target="#modalPencarianSiswa">Pencarian Siswa</button>
+                        </div>
                     </div>
                 </div>
                 <!-- /Register -->
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal --}}
+    <div class="modal fade" id="modalPencarianSiswa" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel3">Pencarian Nama Siswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="cari-siswa" method="GET">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Nama Siswa</label>
+                            <input type="text" name="nama_siswa" class="form-control" placeholder="Enter Nama"
+                                autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="save" class="btn btn-primary">
+                            Cari
+                            <i class="tf-icons bx bx-search-alt"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

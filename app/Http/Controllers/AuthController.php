@@ -14,11 +14,6 @@ class AuthController extends Controller
         return view('auth/login');
     }
 
-    public function login_student()
-    {
-        return view('auth.login-student');
-    }
-
     public function auth(Request $request)
     {
         $validated = $request->validate([
@@ -28,11 +23,6 @@ class AuthController extends Controller
             'username.required' => 'Username wajib diisi',
             'password.required' => 'Passwors wajib diisi',
         ]);
-
-        // $infologin = [
-        //     'username' => $request->username,
-        //     'password' => $request->password,
-        // ];
 
         if (Auth::attempt($validated)) {
             $request->session()->regenerate();
@@ -47,11 +37,8 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect('auth');
     }
 

@@ -66,7 +66,7 @@
                                         <td>Spp </td>
                                         <td align="right">Rp. {{ number_format($student->spp1, 0, ',', '.') }} </td>
                                         <td align="right">Rp. {{ number_format($spp->spp1, 0, ',', '.') }} </td>
-                                        <td align="right">Rp.
+                                        <td align="right" id="sisa_tagihan1">Rp.
                                             {{ number_format($spp->spp1 - $student->spp1, 0, ',', '.') }}</td>
                                     </tr>
                                 @elseif ($class == 2)
@@ -74,7 +74,7 @@
                                         <td>Spp </td>
                                         <td align="right">Rp. {{ number_format($student->spp2, 0, ',', '.') }} </td>
                                         <td align="right">Rp. {{ number_format($spp->spp2, 0, ',', '.') }} </td>
-                                        <td align="right">Rp.
+                                        <td align="right" id="sisa_tagihan2">Rp.
                                             {{ number_format($spp->spp2 - $student->spp2, 0, ',', '.') }}</td>
                                     </tr>
                                 @elseif ($class == 3)
@@ -82,7 +82,7 @@
                                         <td>Spp </td>
                                         <td align="right">Rp. {{ number_format($student->spp3, 0, ',', '.') }} </td>
                                         <td align="right">Rp. {{ number_format($spp->spp3, 0, ',', '.') }} </td>
-                                        <td align="right">Rp.
+                                        <td align="right" id="sisa_tagihan3">Rp.
                                             {{ number_format($spp->spp3 - $student->spp3, 0, ',', '.') }}</td>
                                     </tr>
                                 @endif
@@ -111,8 +111,18 @@
                                         <tr>
                                             <td> Spp </td>
                                             <td>
-                                                <input type="number" name="spp1" class="form-control" value="0"
-                                                    required @if ($spp1 == 0) @readonly(true) @endif>
+                                                <div class="input-group input-group-merge">
+                                                    <span class="input-group-text">
+                                                        Rp.
+                                                    </span>
+                                                    <input type="number" id="spp1" name="spp1"
+                                                        class="form-control" value="0" required
+                                                        oninput="sisaTagihan1()"
+                                                        @if ($spp1 == 0) @readonly(true) @endif
+                                                        autocomplete="off">
+                                                </div>
+                                                <input type="hidden" name="spp1_sisa" id="spp1_sisa"
+                                                    value="{{ $spp1 }}" oninput="sisaTagihan1()">
                                                 <input type="hidden" name="spp1_lama" value="{{ $student->spp1 }}">
                                             </td>
                                         </tr>
@@ -150,8 +160,18 @@
                                         <tr>
                                             <td> Spp </td>
                                             <td>
-                                                <input type="number" name="spp2" class="form-control" value="0"
-                                                    @if ($spp2 == 0) @readonly(true) @endif>
+                                                <div class="input-group input-group-merge">
+                                                    <span class="input-group-text">
+                                                        Rp.
+                                                    </span>
+                                                    <input type="number" id="spp2" name="spp2"
+                                                        class="form-control" value="0" required
+                                                        oninput="sisaTagihan2()"
+                                                        @if ($spp2 == 0) @readonly(true) @endif
+                                                        autocomplete="off">
+                                                </div>
+                                                <input type="hidden" name="spp2_sisa" id="spp2_sisa"
+                                                    oninput="sisaTagihan2()" value="{{ $spp2 }}">
                                                 <input type="hidden" name="spp2_lama" value="{{ $student->spp2 }}">
                                             </td>
                                         </tr>
@@ -184,14 +204,24 @@
                                         <input type="hidden" name="student_id" value="{{ $student->id }}">
                                         <input type="hidden" name="tahun_ajaran" value="{{ $tahun_ajaran }}">
                                         <input type="hidden" name="kelas" value="{{ $class }}">
-                                        <input type="hidden" name="tahun_masuk" value="{{ $student->tahun_masuk }}">
+                                        <input type="hidden" name="tahun_masuk"
+                                            value="{{ $student->tahun_masuk }}">
                                         <input type="hidden" name="class_id" value="{{ $student->class->id }}">
                                         <tr>
                                             <td> Spp </td>
                                             <td>
-                                                <input type="number" name="spp3" class="form-control"
-                                                    value="0"
-                                                    @if ($spp3 == 0) @readonly(true) @endif>
+                                                <div class="input-group input-group-merge">
+                                                    <span class="input-group-text">
+                                                        Rp.
+                                                    </span>
+                                                    <input type="number" name="spp3" id="spp3"
+                                                        class="form-control" value="0" required
+                                                        oninput="sisaTagihan3()"
+                                                        @if ($spp3 == 0) @readonly(true) @endif
+                                                        autocomplete="off">
+                                                </div>
+                                                <input type="hidden" name="spp3_sisa" id="spp3_sisa"
+                                                    oninput="sisaTagihan3()" value="{{ $spp3 }}">
                                                 <input type="hidden" name="spp3_lama" value="{{ $student->spp3 }}">
                                             </td>
                                         </tr>
@@ -229,5 +259,39 @@
             </div>
         </div>
     </div>
+    <script>
+        function formatRupiah(number) {
+            return number.toLocaleString('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+        }
+
+        function sisaTagihan1() {
+            var spp = parseFloat(document.getElementById('spp1').value) || 0;
+            var spp1_sisa = parseFloat(document.getElementById('spp1_sisa').value) || 0;
+            var sisa_tagihan1 = spp1_sisa - spp;
+
+            document.getElementById('sisa_tagihan1').textContent = formatRupiah(sisa_tagihan1);
+        }
+
+        function sisaTagihan2() {
+            var spp = parseFloat(document.getElementById('spp2').value) || 0;
+            var spp2_sisa = parseFloat(document.getElementById('spp2_sisa').value) || 0;
+            var sisa_tagihan2 = spp2_sisa - spp;
+
+            document.getElementById('sisa_tagihan2').textContent = formatRupiah(sisa_tagihan2);
+        }
+
+        function sisaTagihan3() {
+            var spp = parseFloat(document.getElementById('spp3').value) || 0;
+            var spp3_sisa = parseFloat(document.getElementById('spp3_sisa').value) || 0;
+            var sisa_tagihan3 = spp3_sisa - spp;
+
+            document.getElementById('sisa_tagihan3').textContent = formatRupiah(sisa_tagihan3);
+        }
+    </script>
 
 </x-layout>

@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('nis', 10);
+            $table->string('nis', 10)->unique();
             $table->string('name', 50);
             $table->foreignId('class_id')->constrained(
                 table: 'class_rooms',
                 indexName: 'class_id'
             );
             $table->enum('gender', ['Laki-Laki', 'Perempuan']);
+            $table->string('telp', 20);
             $table->integer('tahun_masuk');
             $table->date('tanggal_lahir');
             $table->string('alamat');

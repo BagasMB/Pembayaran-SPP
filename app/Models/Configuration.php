@@ -9,9 +9,4 @@ class Configuration extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'email', 'judul', 'alamat', 'phone', 'logo'];
-
-    public static function config()
-    {
-        return Configuration::where('id', 1);
-    }
 }

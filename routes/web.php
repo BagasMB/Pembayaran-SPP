@@ -14,6 +14,10 @@ Route::post('/login', [AuthController::class, 'auth']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/404', [AuthController::class, 'error404']);
 
+// Halaman Siswa
+Route::post('/cari-siswa', [StudentController::class, 'cariSiswa']);
+Route::get('/transaksi-siswa/{id}', [StudentController::class, 'transaksiSiswa']);
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
     Route::get('/audio', [DashboardController::class, 'audio']);
