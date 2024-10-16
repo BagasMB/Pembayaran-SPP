@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('class_rooms', function (Blueprint $table) {
-            $table->id();
-            $table->string('name_class', 100)->required();
-            $table->string('jurusan', 50)->required();
-            $table->timestamps();
+        Schema::table('class_rooms', function (Blueprint $table) {
+            $table->string('name_class', 100)->unique()->change();
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('class_rooms');
+        Schema::table('class_rooms', function (Blueprint $table) {
+            $table->dropUnique('class_rooms_name_class_unique');
+        });
     }
 };
