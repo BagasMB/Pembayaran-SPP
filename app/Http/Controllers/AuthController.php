@@ -21,16 +21,27 @@ class AuthController extends Controller
             'password' => 'required',
         ], [
             'username.required' => 'Username wajib diisi',
-            'password.required' => 'Passwors wajib diisi',
+            'password.required' => 'Password wajib diisi',
         ]);
 
-        if (Auth::attempt($validated)) {
-            $request->session()->regenerate();
-            flash()->success('Selamat Datang 🎉');
-            return redirect()->intended('');
+        // Cek apakah username ada di database
+        $user = User::where('username', $validated['username'])->first();
+
+        if ($user) {
+            // Jika username ditemukan, cek apakah password sesuai
+            if (Auth::attempt($validated)) {
+                $request->session()->regenerate();
+                flash()->success('Selamat Datang 🎉');
+                return redirect()->intended('');
+            } else {
+                // Jika password salah
+                flash()->error('Password yang Anda masukkan salah.');
+                return redirect()->back()->withInput();
+            }
         } else {
-            $request->session()->flash('status', 'Username dan Password tidak sesuai');
-            return redirect('auth');
+            // Jika username tidak ditemukan
+            flash()->error('Username yang Anda masukkan salah.');
+            return redirect()->back()->withInput();
         }
     }
 
