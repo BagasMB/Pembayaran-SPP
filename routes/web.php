@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ClassController;
-use App\Http\Controllers\ConfigurationController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\SppController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SppController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClassController;
+use App\Http\Controllers\AbsenceController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ConfigurationController;
 
 Route::get('/auth', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'auth']);

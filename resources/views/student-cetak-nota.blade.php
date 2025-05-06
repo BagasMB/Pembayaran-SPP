@@ -262,16 +262,13 @@
                             <td>Di Bayar</td>
                             <td> : </td>
                             @if ($transaksi->spp1)
-                                <td>RP.
-                                    {{ number_format($transaksi->spp1, 0, ',', '.') }}
+                                <td>{{ formatRupiah($transaksi->spp1) }}
                                 </td>
                             @elseif($transaksi->spp2)
-                                <td>RP.
-                                    {{ number_format($transaksi->spp2, 0, ',', '.') }}
+                                <td>{{ formatRupiah($transaksi->spp2) }}
                                 </td>
                             @elseif($transaksi->spp3)
-                                <td>RP.
-                                    {{ number_format($transaksi->spp3, 0, ',', '.') }}
+                                <td>{{ formatRupiah($transaksi->spp3) }}
                                 </td>
                             @endif
                         </tr>

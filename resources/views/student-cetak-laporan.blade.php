@@ -108,9 +108,9 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $value->nis }}</td>
                         <td>{{ $value->name }}</td>
-                        <td align="right">Rp. {{ number_format($value->spp1, 0, ',', '.') }}</td>
-                        <td align="right">Rp. {{ number_format($value->spp2, 0, ',', '.') }}</td>
-                        <td align="right">Rp. {{ number_format($value->spp3, 0, ',', '.') }}</td>
+                        <td align="right">{{ formatRupiah($value->spp1) }}</td>
+                        <td align="right">{{ formatRupiah($value->spp2) }}</td>
+                        <td align="right">{{ formatRupiah($value->spp3) }}</td>
                     </tr>
                 @endforeach
             </tbody>

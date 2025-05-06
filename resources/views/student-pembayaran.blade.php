@@ -64,26 +64,26 @@
                                 @if ($class == 1)
                                     <tr>
                                         <td>Spp </td>
-                                        <td align="right">Rp. {{ number_format($student->spp1, 0, ',', '.') }} </td>
-                                        <td align="right">Rp. {{ number_format($spp->spp1, 0, ',', '.') }} </td>
-                                        <td align="right" id="sisa_tagihan1">Rp.
-                                            {{ number_format($spp->spp1 - $student->spp1, 0, ',', '.') }}</td>
+                                        <td align="right">{{ formatRupiah($student->spp1) }} </td>
+                                        <td align="right">{{ formatRupiah($spp->spp1) }} </td>
+                                        <td align="right" id="sisa_tagihan1">
+                                            {{ formatRupiah($spp->spp1 - $student->spp1) }}</td>
                                     </tr>
                                 @elseif ($class == 2)
                                     <tr>
                                         <td>Spp </td>
-                                        <td align="right">Rp. {{ number_format($student->spp2, 0, ',', '.') }} </td>
-                                        <td align="right">Rp. {{ number_format($spp->spp2, 0, ',', '.') }} </td>
-                                        <td align="right" id="sisa_tagihan2">Rp.
-                                            {{ number_format($spp->spp2 - $student->spp2, 0, ',', '.') }}</td>
+                                        <td align="right">{{ formatRupiah($student->spp2) }} </td>
+                                        <td align="right">{{ formatRupiah($spp->spp2) }} </td>
+                                        <td align="right" id="sisa_tagihan2">
+                                            {{ formatRupiah($spp->spp2 - $student->spp2) }}</td>
                                     </tr>
                                 @elseif ($class == 3)
                                     <tr>
                                         <td>Spp </td>
-                                        <td align="right">Rp. {{ number_format($student->spp3, 0, ',', '.') }} </td>
-                                        <td align="right">Rp. {{ number_format($spp->spp3, 0, ',', '.') }} </td>
-                                        <td align="right" id="sisa_tagihan3">Rp.
-                                            {{ number_format($spp->spp3 - $student->spp3, 0, ',', '.') }}</td>
+                                        <td align="right">{{ formatRupiah($student->spp3) }} </td>
+                                        <td align="right">{{ formatRupiah($spp->spp3) }} </td>
+                                        <td align="right" id="sisa_tagihan3">
+                                            {{ formatRupiah($spp->spp3 - $student->spp3) }}</td>
                                     </tr>
                                 @endif
                             </tbody>

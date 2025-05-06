@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('name_class', 100)->required();
+            $table->string('name_class', 100)->unique()->required();
             $table->string('jurusan', 50)->required();
             $table->timestamps();
         });

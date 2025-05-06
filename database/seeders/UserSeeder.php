@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
         $data = [
             ['username' => 'admin', 'password' => Hash::make('ya'), 'name' => 'Bagas', 'role' => 'Admin', 'email' => 'bgs@gmail.com', 'email_verified_at' => now(), 'remember_token' => Str::random(10)],
             ['username' => 'user', 'password' => Hash::make('ya'), 'name' => 'Chiss', 'role' => 'Staff', 'email' => 'budi@gmail.com', 'email_verified_at' => now(), 'remember_token' => Str::random(10)],
+            ['username' => 'jokowi', 'password' => Hash::make('ya'), 'name' => 'Koko', 'role' => 'Staff', 'email' => 'koko@gmail.com', 'email_verified_at' => now(), 'remember_token' => Str::random(10)],
         ];
 
         foreach ($data as $value) {

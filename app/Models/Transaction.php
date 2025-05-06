@@ -32,7 +32,8 @@ class Transaction extends Model
 
         // Get the count of sales for the current month
         $jumlah = DB::table('transactions')
-            ->whereRaw("DATE_FORMAT(tanggal_bayar, '%Y-%m') = ?", [$tanggal])
+            // ->whereRaw("DATE_FORMAT(tanggal_bayar, '%Y-%m') = ?", [$tanggal]) //mysql
+            ->whereRaw("strftime(tanggal_bayar, '%Y-%m') = ?", [$tanggal]) //sqlite
             ->count();
 
         // Generate nota number
@@ -58,7 +59,9 @@ class Transaction extends Model
     public static function transaksibulanan()
     {
         $month = date('Y-m');
-        return DB::table('transactions')->select(DB::raw('SUM(spp1 + spp2 + spp3) as nominal'))->whereRaw("DATE_FORMAT(tanggal_bayar, '%Y-%m') = ?", [$month])->value('nominal');
+        $nominal = Transaction::selectRaw('SUM(spp1 + spp2 + spp3) as nominal')->whereRaw("strftime('%Y-%m', tanggal_bayar) = ?", [$month])->first(); //sqlite
+        // return DB::table('transactions')->select(DB::raw('SUM(spp1 + spp2 + spp3) as nominal'))->whereRaw("DATE_FORMAT(tanggal_bayar, '%Y-%m') = ?", [$month])->value('nominal'); //mysql
+        return number_format($nominal->nominal ?? 0);
     }
 
     public static function total_kelas1($id)

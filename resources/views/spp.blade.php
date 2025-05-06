@@ -29,9 +29,9 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $list->tahun_ajaran }}</td>
-                                <td>Rp. {{ number_format($list->spp1, 0, ',', '.') }}</td>
-                                <td>Rp. {{ number_format($list->spp2, 0, ',', '.') }}</td>
-                                <td>Rp. {{ number_format($list->spp3, 0, ',', '.') }}</td>
+                                <td>{{ formatRupiah($list->spp1) }}</td>
+                                <td>{{ formatRupiah($list->spp2) }}</td>
+                                <td>{{ formatRupiah($list->spp3) }}</td>
                                 <td>
                                     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modalEditUser{{ $list->id }}">

@@ -63,10 +63,10 @@
                             @endphp
                             <tr>
                                 <td>{{ $list->nota }}</td>
-                                <td>{{ \Carbon\Carbon::parse($list->tanggal_bayar)->locale('id')->translatedFormat('l, d F Y') }}
+                                <td>{{ formatDate($list->tanggal_bayar, 'l, d F Y') }}
                                 </td>
                                 <td>{{ $list->tahun_ajaran }}</td>
-                                <td>Rp. {{ number_format($total, 0, ',', '.') }}</td>
+                                <td>{{ formatRupiah($total) }}</td>
                                 <td>
                                     <a href="/student/cetak-nota/{{ $list->student_id }}/{{ $list->id }}"
                                         type="button" class="btn btn-primary btn-sm" target="_blank">
