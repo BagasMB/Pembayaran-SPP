@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
-                                    <small class="text-muted">{{ Auth::user()->role }}</small>
+                                    <small class="text-muted">{{ Auth::user()->roles->first()->name ?? '-' }}</small>
                                 </div>
                             </div>
                         </a>
