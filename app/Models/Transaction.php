@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\DB;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $fillable = ['nota', 'tahun_ajaran', 'tanggal_bayar', 'student_id', 'spp1', 'spp2', 'spp3'];
-
+    protected $guarded = ['id'];
 
     public function student()
     {

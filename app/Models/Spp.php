@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Spp extends Model
 {
     use HasFactory;
-    protected $fillable = ['tahun_ajaran', 'spp1', 'spp2', 'spp3'];
+    protected $guarded = ['id'];
 
     public static function get_spp($tahun_ajaran)
     {

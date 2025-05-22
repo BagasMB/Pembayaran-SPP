@@ -27,9 +27,17 @@ class StudentController extends Controller
 
     public function index()
     {
-        $studentList = Student::with('class')->orderBy('nis', 'ASC')->get();
-        $class = ClassRoom::select('id', 'name_class')->orderBy('name_class', 'ASC')->get();
-        return view('student', ['title' => 'Page | Student', 'studentList' => $studentList, 'class' => $class]);
+        return view('pages.student', ['title' => 'Page | Student']);
+    }
+
+    public function create()
+    {
+        return view('pages.form-student', ['title' => 'Form Create Student', 'studentID' => null]);
+    }
+
+    public function edit($studentID)
+    {
+        return view('pages.form-student', ['title' => 'Form Edit Student', 'studentID' => $studentID]);
     }
 
     public function studentClass($tahun_masuk, $class_id)

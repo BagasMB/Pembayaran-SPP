@@ -1,64 +1,34 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SppController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClassController;
-use App\Http\Controllers\AbsenceController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ConfigurationController;
+use App\Http\Controllers\MajorController;
+use App\Http\Controllers\SppController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
+use App\Livewire\DashboardPage;
 
-Route::get('/auth', [AuthController::class, 'index'])->name('login');
-Route::post('/login', [AuthController::class, 'auth']);
-Route::get('/logout', [AuthController::class, 'logout']);
-Route::get('/404', [AuthController::class, 'error404']);
+Route::get('/', DashboardPage::class)->middleware(['auth', 'verified'])->name('dashboard');
 
-// Halaman Siswa
-Route::post('/cari-siswa', [StudentController::class, 'cariSiswa']);
-Route::get('/transaksi-siswa/{id}', [StudentController::class, 'transaksiSiswa']);
+Route::get('/dashboard', DashboardPage::class)->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index']);
-    Route::get('/audio', [DashboardController::class, 'audio']);
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/user', [UserController::class, 'index'])->middleware('IsAdmin');
-    Route::post('/simpanUser', [UserController::class, 'simpan'])->middleware('IsAdmin');
-    Route::put('/updateuser', [UserController::class, 'update'])->middleware('IsAdmin');
-    Route::get('/delete-user/{id}', [UserController::class, 'hapus'])->middleware('IsAdmin');
-
-    // ALL 
-    Route::get('/student', [StudentController::class, 'index']);
-    Route::post('/simpanSiswa', [StudentController::class, 'simpan']);
-    Route::put('/updateStudent', [StudentController::class, 'update']);
-    Route::get('/delete-student/{id}', [StudentController::class, 'hapus']);
-
-    // PERKELAS
-    Route::get('/student/class/{tahun_masuk}/{id}', [StudentController::class, 'studentClass']);
-    Route::get('/student/pembayaran/{student_id}/{class}/{thn1}/{thn2}', [StudentController::class, 'pembayaran'])->name('student.pembayaran');
-    Route::post('/student/bayar', [StudentController::class, 'bayar']);
-    Route::get('/student/transaksi/{id}', [StudentController::class, 'transaksi']);
-    Route::get('/student/cetak-nota/{student_id}/{id}', [StudentController::class, 'cetakNota']);
-    Route::get('/student/cetak-laporan/{tahun_masuk}/{class_id}', [StudentController::class, 'cetakLaporan']);
-    Route::get('/student-eksport-excel', [StudentController::class, 'eksport_excel']);
-    Route::post('/student-import-excel', [StudentController::class, 'import_excel']);
-
-
-    Route::get('/classroom', [ClassController::class, 'index']);
-    Route::post('/simpanClass', [ClassController::class, 'simpan']);
-    Route::get('/class-eksport-excel', [ClassController::class, 'eksport_excel']);
-    Route::post('/class-import-excel', [ClassController::class, 'import_excel']);
-    Route::put('/updateClass', [ClassController::class, 'update']);
-    Route::get('/delete-class/{id}', [ClassController::class, 'hapus']);
-
-    Route::get('/spp', [SppController::class, 'index']);
-    Route::prefix('spp')->controller(SppController::class)->group(function () {
-        Route::post('/simpanSPP', 'simpan');
-        Route::put('/updateSPP', 'update');
-        Route::get('/hapus-SPP/{id}', 'hapus');
-    });
+    Route::resource('user', UserController::class);
+    Route::resource('classroom', ClassController::class);
+    Route::resource('teacher', TeacherController::class);
+    Route::get('classroom/destroy/{id}', [ClassController::class, 'destroy'])->name('classroom.destroy');
+    Route::resource('student', StudentController::class);
+    Route::resource('spp', SppController::class);
+    Route::resource('major', MajorController::class);
 
     Route::get('/config', [ConfigurationController::class, 'index']);
-    Route::put('/update-config', [ConfigurationController::class, 'update']);
 });
+
+require __DIR__ . '/auth.php';

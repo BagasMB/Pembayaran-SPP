@@ -9,8 +9,15 @@ class UserController extends Controller
 {
     public function index()
     {
-        $userList = User::all();
-        return view('user', ['title' => 'Page | User', 'userList' => $userList]);
+        return view('pages.user', ['title' => 'Page | User']);
+    }
+
+    public function edit($id)
+    {
+        return view('pages.edituser', [
+            'title' => 'Page | Edit User',
+            'id' => $id,
+        ]);
     }
 
     public function simpan(Request $request)
@@ -24,13 +31,6 @@ class UserController extends Controller
         ]);
 
         flash()->success('Data Berhasil Di Simpan 🎉');
-        return redirect('/user');
-    }
-
-    public function update(Request $request)
-    {
-        User::findorfail($request->id)->update($request->all());
-        flash()->success('Data Berhasil Di Ubah 🎉');
         return redirect('/user');
     }
 

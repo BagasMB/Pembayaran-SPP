@@ -44,14 +44,14 @@ class UserSeeder extends Seeder
             'username' => 'superadmin',
             'email' => 'superadmin@gmail.com',
             'password' => Hash::make('123'),
-            'class_id' => 1
         ]);
         $superadmin->assignRole('Super Admin');
         $this->command->info('Seeder user SUPER ADMIN berhasil dijalankan.');
 
         // Guru
         $guru = [
-            ['name' => 'Musti', 'gender' => 'Perempuan', 'telp' => 81235343, 'tanggal_lahir' => '2004-08-10', 'alamat' => 'sas', 'class_id' => 11, 'tahun_masuk' => 2021],
+            ['name' => 'Musti', 'nip' => '0000000', 'gender' => 'Perempuan', 'telp' => 81235343, 'tanggal_lahir' => '1999-08-10', 'alamat' => 'sas', 'tahun_masuk' => 2021, 'major_id' => 3],
+            ['name' => 'Agung Wiratmo', 'nip' => '0000001', 'gender' => 'Laki-Laki', 'telp' => 81235343, 'tanggal_lahir' => '1995-08-10', 'alamat' => 'sas', 'tahun_masuk' => 2021, 'major_id' => 3],
         ];
 
         foreach ($guru as $value) {
@@ -61,8 +61,9 @@ class UserSeeder extends Seeder
                     'username' => $this->usernameFormat($value['name']),
                     'password' => Hash::make('123'),
                     'name' => $value['name'],
+                    'nip' => $value['nip'],
                     'gender' => $value['gender'],
-                    'class_id' => $value['class_id'],
+                    'major_id' => $value['major_id'],
                     'telp' => $value['telp'],
                     'tahun_masuk' => $value['tahun_masuk'],
                     'tanggal_lahir' => $value['tanggal_lahir'],

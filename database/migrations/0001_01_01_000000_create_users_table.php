@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50);
             $table->string('nis', 10)->nullable()->unique();
+            $table->string('nip', 20)->nullable()->unique();
             $table->string('username', 50)->unique();
             $table->string('password');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('class_id')->constrained(table: 'class_rooms', indexName: 'class_id')->nullable();
+            $table->foreignId('class_id')->nullable()->constrained(table: 'class_rooms', indexName: 'class_id')->onDelete('set null');
+            $table->foreignId('major_id')->nullable()->constrained(table: 'majors', indexName: 'major_id')->onDelete('set null');
             $table->enum('gender', ['Laki-Laki', 'Perempuan'])->nullable();
             $table->string('telp', 20)->nullable();
             $table->integer('tahun_masuk')->nullable();

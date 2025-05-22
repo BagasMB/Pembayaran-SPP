@@ -2,18 +2,29 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ClassRoom extends Model
 {
     use HasFactory;
-    protected $fillable = ['name_class', 'jurusan'];
+    protected $guarded = ['id'];
 
-    public function students(): HasMany
+    // public function students(): HasMany
+    // {
+    //     return $this->hasMany(Student::class, 'class_id', 'id');
+    // }
+
+    public function students()
     {
-        return $this->hasMany(Student::class, 'class_id', 'id');
+        return $this->hasMany(User::class, 'class_id'); // atau sesuaikan nama kolom foreign key-nya
+    }
+
+    public function majors(): BelongsTo
+    {
+        return $this->belongsTo(Major::class, 'major_id', 'id');
     }
 
     public static function now_class($tahun_masuk, $name_class)

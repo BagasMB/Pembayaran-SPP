@@ -1,7 +1,3 @@
-// DataTable Biasa
-$(function () {
-	$("#myTable").DataTable();
-});
 
 $(function () {
 	var table = $("#example").DataTable({

@@ -16,7 +16,9 @@ return new class extends Migration
             $table->integer('spp1')->default(0);
             $table->integer('spp2')->default(0);
             $table->integer('spp3')->default(0);
-            $table->string('tahun_ajaran', 100);
+            $table->string('tahun_ajaran', 5);
+            $table->string('tahun_ajaran1', 5);
+            $table->string('tahun_ajaran2', 5);
             $table->timestamps();
         });
     }
