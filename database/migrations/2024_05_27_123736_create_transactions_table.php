@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('tahun_ajaran', 100);
             $table->date('tanggal_bayar');
             $table->foreignId('student_id')->constrained(
-                table: 'students',
+                table: 'users',
                 indexName: 'transactions_student_id'
             );
             $table->integer('spp1')->default(0);

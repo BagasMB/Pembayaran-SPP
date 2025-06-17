@@ -1,10 +1,4 @@
-<x-layout>
-    <x-slot:title>{{ $title }}</x-slot:title>
-
-    @php
-        $kelas = new \App\Models\ClassRoom();
-    @endphp
-
+<div>
     <div class="card card-responsive mb-3">
         <div class="card-header">
             <div class="d-flex align-items-center justify-content-between">
@@ -33,19 +27,19 @@
                         <tr>
                             <td>Kelas </td>
                             <td>:</td>
-                            <td>{{ $kelas->now_class($student->tahun_masuk, $student->class->name_class) }} </td>
+                            <td>{{ $kelas_now }} </td>
                         </tr>
                         <tr>
                             <td>Jurusan </td>
                             <td>:</td>
-                            <td>{{ $student->class->jurusan }} </td>
+                            <td>{{ $student->class->majors->name }} </td>
                         </tr>
                     </table>
                 </div>
             </div>
             <hr class="my-3 mb-4">
             <div class="table-responsive text-nowrap">
-                <table id="myTable" class="table table-bordered table-striped" width="100%">
+                <table class="table table-bordered table-striped" width="100%">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -57,16 +51,12 @@
                     </thead>
                     <tbody>
                         @foreach ($transaksi as $list)
-                            @php
-                                $transaction = new \App\Models\Transaction();
-                                $total = $transaction->nominalTransaksi($list->id);
-                            @endphp
                             <tr>
                                 <td>{{ $list->nota }}</td>
                                 <td>{{ formatDate($list->tanggal_bayar, 'l, d F Y') }}
                                 </td>
                                 <td>{{ $list->tahun_ajaran }}</td>
-                                <td>{{ formatRupiah($total) }}</td>
+                                <td>{{ formatRupiah($transactionTotals[$list->id] ?? 0) }}</td>
                                 <td>
                                     <a href="/student/cetak-nota/{{ $list->student_id }}/{{ $list->id }}"
                                         type="button" class="btn btn-primary btn-sm" target="_blank">
@@ -81,5 +71,4 @@
             </div>
         </div>
     </div>
-
-</x-layout>
+</div>

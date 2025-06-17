@@ -17,6 +17,11 @@ class Transaction extends Model
         return $this->belongsTo(Student::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'student_id');
+    }
+
     public function spp()
     {
         return $this->belongsTo(Spp::class, 'tahun_ajaran', 'tahun_ajaran');
@@ -26,24 +31,21 @@ class Transaction extends Model
     {
         date_default_timezone_set('Asia/Jakarta');
 
-        // Get current year-month
+        // Ambil tanggal sekarang dalam format yymm
+        $prefix = Carbon::now()->format('ymd'); // contoh: 2505
+        // Hitung transaksi bulan ini (gunakan prefix sebagai identifikasi bulan)
         $tanggal = Carbon::now()->format('Y-m');
-
-        // Get the count of sales for the current month
-        $jumlah = DB::table('transactions')
-            // ->whereRaw("DATE_FORMAT(tanggal_bayar, '%Y-%m') = ?", [$tanggal]) //mysql
-            ->whereRaw("strftime(tanggal_bayar, '%Y-%m') = ?", [$tanggal]) //sqlite
-            ->count();
-
-        // Generate nota number
-        $nota = Carbon::now()->format('ymd') . ($jumlah + 1);
-
-        return $nota;
+        $jumlah = DB::table('transactions')->whereRaw("strftime('%Y-%m', tanggal_bayar) = ?", [$tanggal])->count();
+        // +1 agar jadi urutan berikutnya
+        $urutan =  $jumlah + 1;
+        // Gabungkan prefix dan urutan jadi nota unik
+        $nota = $prefix . $urutan;
+        return $nota; // contoh hasil: 2505002
     }
 
     public static function nominalTransaksi($id)
     {
-        return DB::table('transactions')->where('id', $id)->selectRaw('SUM( spp1 + spp2 + spp3 ) as nominal')->value('nominal');
+        return Transaction::where('id', $id)->selectRaw('SUM( spp1 + spp2 + spp3 ) as nominal')->value('nominal');
     }
 
     public static function jmltransaksiHariIni()
@@ -60,7 +62,7 @@ class Transaction extends Model
         $month = date('Y-m');
         $nominal = Transaction::selectRaw('SUM(spp1 + spp2 + spp3) as nominal')->whereRaw("strftime('%Y-%m', tanggal_bayar) = ?", [$month])->first(); //sqlite
         // return DB::table('transactions')->select(DB::raw('SUM(spp1 + spp2 + spp3) as nominal'))->whereRaw("DATE_FORMAT(tanggal_bayar, '%Y-%m') = ?", [$month])->value('nominal'); //mysql
-        return number_format($nominal->nominal ?? 0);
+        return $nominal->nominal ?? 0;
     }
 
     public static function total_kelas1($id)

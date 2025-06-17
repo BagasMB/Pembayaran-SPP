@@ -22,7 +22,7 @@ class DashboardPage extends Component
         $this->cont_class = ClassRoom::count();
         $this->transbulan = Transaction::transaksibulanan();
         $this->jmltransaksiToday = Transaction::jmltransaksiHariIni();
-        $this->transaksi = Transaction::with('student')->orderBy('tanggal_bayar', 'DESC')->take(5)->get();
+        $this->transaksi = Transaction::with('student')->orderBy('nota', 'DESC')->take(5)->get();
     }
 
     public function render()

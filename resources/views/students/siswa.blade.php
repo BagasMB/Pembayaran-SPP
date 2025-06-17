@@ -82,7 +82,7 @@
                             <tr>
                                 <td>Jurusan </td>
                                 <td>:</td>
-                                <td>{{ $student->class->jurusan }} </td>
+                                <td>{{ $student->class->majors->name }}</td>
                             </tr>
                         </table>
                     </div>

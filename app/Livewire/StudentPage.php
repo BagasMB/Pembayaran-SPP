@@ -12,12 +12,7 @@ class StudentPage extends Component
 
     public function mount()
     {
-        $this->studentList = User::with('class')
-            ->whereHas('roles', function ($query) {
-                $query->where('name', 'Siswa');
-            })
-            ->orderBy('nis', 'ASC')
-            ->get();
+        $this->studentList = User::with('class')->siswa()->orderBy('nis', 'ASC')->get();
         $this->classList = ClassRoom::select('id', 'name_class')->orderBy('name_class', 'ASC')->get();
     }
 

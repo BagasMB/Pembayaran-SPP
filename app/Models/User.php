@@ -59,4 +59,18 @@ class User extends Authenticatable
             $query->where('name', 'like', '%' . $value . '%')->orWhere('username', 'like', '%' . $value . '%')->orWhere('email', 'like', '%' . $value . '%');
         }
     }
+
+    public function scopeSiswa($query)
+    {
+        return $query->whereHas('roles', function ($query) {
+            $query->where('name', 'Siswa');
+        });
+    }
+
+    public function scopeGuru($query)
+    {
+        return $query->whereHas('roles', function ($query) {
+            $query->where('name', 'Guru');
+        });
+    }
 }

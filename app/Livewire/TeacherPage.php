@@ -12,12 +12,7 @@ class TeacherPage extends Component
 
     public function mount()
     {
-        $this->teacherList = User::with('major')
-            ->whereHas('roles', function ($query) {
-                $query->where('name', 'Guru');
-            })
-            ->orderBy('nis', 'ASC')
-            ->get();
+        $this->teacherList = User::with('major')->guru()->orderBy('nis', 'ASC')->get();
         $this->classList = ClassRoom::select('id', 'name_class')->orderBy('name_class', 'ASC')->get();
     }
 

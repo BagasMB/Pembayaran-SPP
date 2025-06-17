@@ -55,12 +55,14 @@
                             <span class="align-middle">My Profile</span>
                         </a>
                     </li> --}}
-                    <li>
-                        <a class="dropdown-item" href="/config">
-                            <i class="bx bx-cog me-2"></i>
-                            <span class="align-middle">Settings</span>
-                        </a>
-                    </li>
+                    @can('configuration')
+                        <li>
+                            <a class="dropdown-item" href="/config">
+                                <i class="bx bx-cog me-2"></i>
+                                <span class="align-middle">Settings</span>
+                            </a>
+                        </li>
+                    @endcan
                     <li>
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">

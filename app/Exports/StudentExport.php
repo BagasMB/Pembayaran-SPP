@@ -3,7 +3,7 @@
 namespace App\Exports;
 
 use App\Models\ClassRoom;
-use App\Models\Student;
+use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -20,7 +20,7 @@ class StudentExport implements FromQuery, WithMapping, WithHeadings
      */
     public function query()
     {
-        return Student::query();
+        return User::query();
     }
 
     public function map($student): array

@@ -26,7 +26,11 @@ class RolePermissionSeeder extends Seeder
             'user',
             'class',
             'guru',
-            'siswa'
+            'siswa',
+            'masterdata',
+            'pembayaran',
+            'transaksi',
+            'configuration'
         ];
 
         // Tambahkan permission ke database
@@ -37,11 +41,16 @@ class RolePermissionSeeder extends Seeder
         // Aturan permission berdasarkan role
         $rolePermissions = [
             'Super Admin' => Permission::all(),
-            'Guru' => Permission::where('name', '!=', 'user')->get(),
+            'Guru' => Permission::whereNotIn('name', [
+                'user',
+                'configuration'
+            ])->get(),
             'Siswa' => Permission::whereNotIn('name', [
                 'user',
                 'class',
-                'student'
+                'masterdata',
+                'pembayaran',
+                'configuration'
             ])->get(),
         ];
 

@@ -97,7 +97,7 @@
                                         <td>{{ formatDate($list->tanggal_bayar, 'l, d F Y') }}
                                         </td>
                                         <td>{{ $list->tahun_ajaran }}</td>
-                                        <td>Rp. {{ formatRupiah($total) }}</td>
+                                        <td>{{ formatRupiah($total) }}</td>
                                         <td>
                                             <a href="/student/cetak-nota/{{ $list->student_id }}/{{ $list->id }}"
                                                 type="button" class="btn btn-primary btn-sm" target="_blank">
@@ -130,7 +130,7 @@
                                     <div class="mt-sm-auto">
                                         {{-- <small class="text-success text-nowrap fw-semibold">
                                             <i class="bx bx-chevron-up"></i> 68.2%</small> --}}
-                                        <p class="mb-0">Rp. {{ number_format($transbulan, 0, ',', '.') }}</p>
+                                        <p class="mb-0">{{ formatRupiah($transbulan) }}</p>
                                     </div>
                                 </div>
                                 <div id="profileReportChart"></div>

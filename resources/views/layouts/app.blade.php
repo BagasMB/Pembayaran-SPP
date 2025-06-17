@@ -58,16 +58,14 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            <x-sidebar></x-sidebar>
-
+            {{-- <x-sidebar></x-sidebar> --}}
+            <livewire:layout.sidebar />
             <!-- Layout container -->
             <div class="layout-page">
+                <!-- Navbar -->
                 <x-navbar>
                     <x-slot:title>{{ $title }}</x-slot:title>
                 </x-navbar>
-                <!-- Navbar -->
-
-
                 <!-- / Navbar -->
 
                 <!-- Content wrapper -->
